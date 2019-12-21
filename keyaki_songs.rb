@@ -1,13 +1,10 @@
 class KeyakiSongs
   require 'csv'
-  require 'English'
   require 'natto'
   require 'nokogiri'
   require 'open-uri'
-  require 'pry'
 
   POPULAR_RANKING_URL = 'https://www.uta-net.com/artist/19868/4/'
-  TOP10 = 9
 
   def run
     doc = Nokogiri::HTML.parse(open(POPULAR_RANKING_URL), nil, 'utf-8')
@@ -18,7 +15,7 @@ class KeyakiSongs
       song = Nokogiri::HTML.parse(open(url), nil, 'utf-8')
       title = song.css('.title > h2').text
       run_natto(song, title, words)
-      break if i == TOP10
+      break if i == 9
     end
     puts words
     hash = words.group_by(&:itself).map{ |key, value| [key, value.count] }.to_h
